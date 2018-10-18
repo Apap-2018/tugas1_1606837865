@@ -27,8 +27,8 @@ public class JabatanServiceImpl implements JabatanService {
 	}
 
 	@Override
-	public void deleteJabatan(JabatanModel jabatan) {
-		jabatandb.delete(jabatan);
+	public void deleteJabatan(JabatanModel jabatan , Long id) {
+		jabatandb.deleteById(id);
 		
 	}
 
@@ -37,7 +37,14 @@ public class JabatanServiceImpl implements JabatanService {
 		// TODO Auto-generated method stub
 		return jabatandb.findAll();
 	}
-	
-	
+
+	@Override
+	public void updateJabatan(JabatanModel jabatan , Long jabatanId) {
+		JabatanModel jabatan1 = jabatandb.getOne(jabatanId);
+		jabatan1.setNama(jabatan.getNama());
+		jabatan1.setDeskripsi(jabatan.getDeskripsi());
+		jabatan1.setGaji_pokok(jabatan.getGaji_pokok());
+		jabatandb.save(jabatan1);
+	}	
 
 }

@@ -20,4 +20,10 @@ public class JabatanPegawaiServiceImpl implements JabatanPegawaiService{
 		return jabatanpegawaidb.findAllByPegawai_Nip(Nip);
 	}
 
+	@Override
+	public List<JabatanPegawaiModel> getJabatanPegawaiById(Long id) {
+		// TODO Auto-generated method stub
+		return jabatanpegawaidb.findAllByJabatan_id(id);
+	}
+
 }

@@ -15,6 +15,9 @@ public class JabatanController {
 	@Autowired
 	private JabatanService jabatanService;
 	
+	@Autowired
+	private JabatanPegawaiService jabatanPegawaiService;
+	
 	@RequestMapping(value = "/jabatan/tambah")
 	public String addJabatan(Model model) {
 		JabatanModel jabatan = new JabatanModel();
@@ -35,5 +38,44 @@ public class JabatanController {
 		JabatanModel jabatan = jabatanService.getJabatanById(Long.parseLong(id)).get();
 		model.addAttribute("jabatan", jabatan);
 		return "view-jabatan";
+	}
+	
+	@RequestMapping(value = "/jabatan/ubah", method = RequestMethod.GET)
+	public String ubahJabatan(@RequestParam (value = "jabatanId") String id, Model model) {
+		JabatanModel jabatan = jabatanService.getJabatanById(Long.parseLong(id)).get();
+		model.addAttribute("jabatan", jabatan);
+		return "ubah-jabatan";
+	}
+	
+	@RequestMapping(value = "/jabatan/ubah" , method = RequestMethod.POST)
+	public String ubahJabatanSubmit(@ModelAttribute JabatanModel jabatan, Model model) {
+		jabatanService.updateJabatan(jabatan, jabatan.getId());
+		model.addAttribute("jabatan", jabatan);
+		return "ubah-jabatan-success";
+	}
+	
+	@RequestMapping(value = "/jabatan/hapus", method = RequestMethod.POST)
+	public String deleteJabatan(@RequestParam (value = "jabatanId") String id, @ModelAttribute JabatanModel jabatan,  Model model) {
+//		JabatanModel jabatan = jabatanService.getJabatanById(Long.parseLong(id)).get();
+//		jabatanService.deleteJabatan(jabatan, jabatan.getId());
+//		model.addAttribute("jabatan", jabatan);
+//		return "delete-jabatan";
+		List<JabatanPegawaiModel> listJabatan = jabatanPegawaiService.getJabatanPegawaiById(Long.parseLong(id));
+		if (listJabatan.isEmpty()) {
+			jabatanService.deleteJabatan(jabatan, jabatan.getId());
+			model.addAttribute("jabatan", jabatan);
+			return "delete-jabatan";
+		}else {
+			return "cant-delete-jabatan";
+		}
+		
+	}
+	
+	@RequestMapping(value = "/jabatan/viewall" , method = RequestMethod.GET)
+	public String viewAllJabatan(Model model) {
+		List<JabatanModel> listJabatan = jabatanService.getAllJabatan();
+		model.addAttribute("listJabatan", listJabatan);
+		return "viewAll-jabatan";
+
 	}
 }

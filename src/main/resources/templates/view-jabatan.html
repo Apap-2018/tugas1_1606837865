@@ -45,11 +45,15 @@
 			
 		</table>
 		<br>
-		<button class = "btn btn-primary">Ubah</button>
-		<!-- <form th:action="@{/jabatan/hapus}" method = "POST">
-			<input type = "hidden" name = "jabatanId" th:value = "${jabatan.id}">
-			<button type = "submit"> Hapus Jabatan</button>
-		</form> -->
+		<form th:action="@{/jabatan/ubah}" name=getJabatan method = "GET">
+			<input type="hidden" th:value="${jabatan.id}" name="jabatanId" />
+			<button type = "submit" class = "btn btn-primary"> Ubah Jabatan</button>
+		</form>
+		<br>
+		<form th:action="@{/jabatan/hapus}" name=getJabatan method = "POST">
+			<input type="hidden" th:value="${jabatan.id}" name="jabatanId" />
+			<button type = "submit" class = "btn btn-danger"> Hapus Jabatan</button>
+		</form>
 
 		</div>
 	</body>
