@@ -50,7 +50,7 @@
 			<button type = "submit" class = "btn btn-primary"> Ubah Jabatan</button>
 		</form>
 		<br>
-		<form th:action="@{/jabatan/hapus}" name=getJabatan method = "POST">
+		<form th:action="@{/jabatan/hapus}" th:object = "${jabatan}" name=getJabatan method = "POST">
 			<input type="hidden" th:value="${jabatan.id}" name="jabatanId" />
 			<button type = "submit" class = "btn btn-danger"> Hapus Jabatan</button>
 		</form>

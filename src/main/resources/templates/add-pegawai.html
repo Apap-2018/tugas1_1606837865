@@ -7,7 +7,17 @@
 		<object th:include = "fragments/fragment :: js" th:remove = "tag"></object>
 	</head>
 	<style> 
+		select, input {
+		    width: 100%;
+		    padding: 12px 20px;
+		    margin: 8px 0;
+		    box-sizing: border-box;
+		    border: none;
+		    background-color: #42d4f4;
+		    color: white;
+		}
 		
+	
 	</style>
 	<body>
 		<nav th:replace = "fragments/fragment :: navbar"></nav>
@@ -16,49 +26,88 @@
 		<h2>Tambah Pegawai</h2>
 		<hr>
 		<form th:action="@{/pegawai/tambah}" th:object = "${pegawai}" method = "POST">
-			<table>
-				<tr>
-					<td>Nama</td>
-					<td><input type ="text" name = "nama"/></td>
-				</tr>
-				<tr>
-					<td>Tempat Lahir</td>
-					<td><input type ="text" name = "tempat_lahir"/></td>
-				</tr>
-				<tr>
-					<td>Tanggal Lahir</td>
-					<td><input type ="text" name = "tanggal_lahir"/></td>
-				</tr>
-				<tr>
-					<td>Tahun Masuk</td>
-					<td><input type ="text" name = "tahun_masuk"/></td>
-				</tr>
-				<tr>
-					<td>Provinsi</td>
-					<td>
-					<select th:field="*{id}">
-					  <option th:each="provinsi : ${listProvinsi}" 
-					          th:value="${provinsi.id}" 
-					          th:text="${provinsi.nama}"></option>
-					</select> 
-					
-					</td>
-				</tr>
-				<tr>
-					<td>Instansi</td>
-					<td>
-					<select th:field="*{id}">
-					  <option th:each="instansi : ${listInstansi}" 
-					          th:value="${instansi.id}" 
-					          th:text="${instansi.nama}"></option>
-					</select> 
-					
-					</td>
-				</tr>
-			</table>
-			<button type = "submit" name="save" class = "btn btn-primary"> Submit </button>
 		
+					<label>Nama</label>
+					<div class="col-lg-8">
+						<input type ="text" name = "nama"/>
+					</div>
+					
+					<label>Tempat Lahir</label>
+					<div class="col-lg-8">
+						<input type ="text" name = "tempat_lahir"/>
+					</div>
+					
+				
+					<label>Tanggal Lahir</label>
+					<div class="col-lg-8">
+						<input type ="Date" name = "tanggalLahir"/>
+					</div>
+					
+				
+					<label>Tahun Masuk</label>
+					<div class="col-lg-8">
+						<input type ="text" name = "tahunMasuk"/>
+					</div>
+					
+				
+					<label>List Provinsi</label>
+					<div class="col-lg-8">
+						<select id = "provinsi" name = "provinsi">
+						  <option th:each="provinsi : ${listProvinsi}" 
+						          th:value="${provinsi.id}" 
+						          th:text="${provinsi.nama}"></option>
+						</select> 
+					</div>	
+					
+					
+				
+					<label>List Instansi</label>
+					<div class="col-lg-8">
+						<select id = "instansi" name = "instansi.id">
+						  <option th:each="instansi : ${listInstansi}" 
+						          th:value="${instansi.id}" 
+						          th:text="${instansi.nama}"></option>
+						</select> 
+					</div>
+					
+					
+				
+					<label>List Jabatan</label>
+					<div class="col-lg-8" th:each="jabatanPegawai, statusJabatan : *{listJabatan}" >
+						<select th:field="*{listJabatan[__${statusJabatan.index}__].jabatan}" class="col-lg-12">
+						    <option th:each="jabatan, status : ${listJabatan1}" th:value="${jabatan.id}" th:text="${jabatan.nama}"/>
+						</select>		
+					</div>
+					<hr>
+					<button type = "submit" name = "addRow" class = "btn btn-success">Tambah Jabatan</button>
+					
+			<button type = "submit" name="save" class = "btn btn-primary"> Submit </button>
 		</form>
 		</div>
 	</body>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#provinsi').change(
+			     function() {
+			         $.getJSON("/instansi/add", {
+			        	 idProvinsi : $(this).val(),
+			             ajax : 'true'
+			         }, function(data) {
+			             var html = '';
+			             var len = data.length;
+			             for ( var i = 0; i < len; i++) {
+			                 html += '<option value="' + data[i].id + '">'
+			                         + data[i].nama + '</option>';
+			             }
+			             html += '';
+			             console.log("done");
+			             $('#instansi').html(html);
+			         });
+			     });
+	
+	
+		});
+		
+	</script>
 </html>

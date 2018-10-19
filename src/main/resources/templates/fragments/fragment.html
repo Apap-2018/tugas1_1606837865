@@ -9,12 +9,15 @@
 		
 		<head th:fragment="js">
 			<script th:src = "@{/js/bootstrap.min.js}"></script>
+			<script src = "https://code.jquery.com/jquery-3.3.1.min.js"></script>
 		</head>
+		
+		
 		
 	</head>
 	
 	<body>
-		<nav th:fragment = "navbar" class = "navbar navbar-expand-lg navbar-dark bg-dark">
+		<nav th:fragment = "navbar" class = "navbar navbar-expand-lg navbar-dark bg-dark" >
 			<a class = "navbar-brand" href = #>SIPEG</a>
 			<div class = "collapse navbar-collapse" id = "navbarSupportContent">
 				<ul class = "navbar-nav mr-auto">
@@ -28,7 +31,7 @@
 						<a class = "nav-link" th:href = "@{/jabatan/tambah}">Tambah Jabatan</a>
 					</li>
 					<li class = "nav-item active">
-						<a class = "nav-link" th:href = "@{/}">Cari Pegawai</a>
+						<a class = "nav-link" th:href = "@{/pegawai/cari}">Cari Pegawai</a>
 					</li>
 					<li class = "nav-item active">
 						<a class = "nav-link" th:href = "@{/jabatan/viewall}">Lihat Semua Jabatan</a>
@@ -38,5 +41,13 @@
 		</nav>
 	
 	</body>
+	
+	<style>
+		
+		.bg-dark{
+			background-color : #42d4f4;
+		}
+	
+	</style>
 
 </html>

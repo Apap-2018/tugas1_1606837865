@@ -7,5 +7,6 @@ public interface JabatanPegawaiService {
 	
 	Optional<List<JabatanPegawaiModel>> getJabatanPegawaiByNip(String Nip);
 	List<JabatanPegawaiModel> getJabatanPegawaiById(Long id);
+	void addJabatanPegawai(JabatanPegawaiModel jabatanPegawai);
 	
 }

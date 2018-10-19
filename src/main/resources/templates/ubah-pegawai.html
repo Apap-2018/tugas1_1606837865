@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th = "http://www.thymeleaf.org">
+	<head>
+		<title th:replace="fragments/fragment :: headerFragment('Tambah Pegawai')"></title>
+		
+		<object th:include = "fragments/fragment :: css" th:remove = "tag"></object>
+		<object th:include = "fragments/fragment :: js" th:remove = "tag"></object>
+	</head>
+	<style> 
+		
+	</style>
+	<body>
+		<nav th:replace = "fragments/fragment :: navbar"></nav>
+		<br>	
+		<div class = "container">
+		<h2>Ubah Pegawai</h2>
+		<hr>
+		<form th:action="@{/pegawai/ubah}" th:object = "${pegawai}" method = "POST">
+			<table>
+				<tr>
+					<td>Nama</td>
+					<td><input type ="text" name = "nama"/></td>
+				</tr>
+				<tr>
+					<td>Tempat Lahir</td>
+					<td><input type ="text" name = "tempat_lahir"/></td>
+				</tr>
+				<tr>
+					<td>Tanggal Lahir</td>
+					<td><input type ="Date" name = "tanggalLahir"/></td>
+				</tr>
+				<tr>
+					<td>Tahun Masuk</td>
+					<td><input type ="text" name = "tahunMasuk"/></td>
+				</tr>
+				<tr>
+					<td>Provinsi</td>
+					<td>
+					<select id = "provinsi" name = "provinsi">
+					  <option th:each="provinsi : ${listProvinsi}" 
+					          th:value="${provinsi.id}" 
+					          th:text="${provinsi.nama}"></option>
+					</select> 
+					
+					</td>
+				</tr>
+				<tr>
+					<td>Instansi</td>
+					<td>
+					<select id = "instansi" name = "instansi.id">
+					  <option th:each="instansi : ${listInstansi}" 
+					          th:value="${instansi.id}" 
+					          th:text="${instansi.nama}"></option>
+					</select> 
+					
+					</td>
+				</tr>
+				<tr>
+					<td>Jabatan</td>
+					<td>
+						<div class="col-lg-8" th:each="jabatanPegawai, statusJabatan : *{listJabatan}" >
+							<select th:field="*{listJabatan[__${statusJabatan.index}__].jabatan}" class="col-lg-12">
+							    <option th:each="jabatan, status : ${listJabatan1}" th:value="${jabatan.id}" th:text="${jabatan.nama}"/>
+							</select>		
+						</div>
+						<button type = "submit" name = "addRow">Tambah Jabatan</button>
+					</td>
+				</tr>
+			</table>
+			<button type = "submit" name="save" class = "btn btn-primary"> Submit </button>
+		</form>
+		</div>
+	</body>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#provinsi').change(
+			     function() {
+			         $.getJSON("/instansi/add", {
+			        	 idProvinsi : $(this).val(),
+			             ajax : 'true'
+			         }, function(data) {
+			             var html = '';
+			             var len = data.length;
+			             for ( var i = 0; i < len; i++) {
+			                 html += '<option value="' + data[i].id + '">'
+			                         + data[i].nama + '</option>';
+			             }
+			             html += '';
+			             console.log("done");
+			             $('#instansi').html(html);
+			         });
+			     });
+	
+	
+		});
+		
+	</script>
+</html>

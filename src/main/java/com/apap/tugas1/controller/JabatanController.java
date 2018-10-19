@@ -61,9 +61,11 @@ public class JabatanController {
 //		model.addAttribute("jabatan", jabatan);
 //		return "delete-jabatan";
 		List<JabatanPegawaiModel> listJabatan = jabatanPegawaiService.getJabatanPegawaiById(Long.parseLong(id));
+		JabatanModel jabatan1 = jabatanService.getJabatanById(Long.parseLong(id)).get();
 		if (listJabatan.isEmpty()) {
-			jabatanService.deleteJabatan(jabatan, jabatan.getId());
-			model.addAttribute("jabatan", jabatan);
+			System.out.println(jabatan.getNama());
+			jabatanService.deleteJabatan(jabatan, Long.parseLong(id));
+			model.addAttribute("jabatan", jabatan1);
 			return "delete-jabatan";
 		}else {
 			return "cant-delete-jabatan";

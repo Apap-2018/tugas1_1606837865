@@ -14,4 +14,6 @@ public interface PegawaiService {
 	
 	PegawaiModel pegawaiTertua(InstansiModel instansi);
 	PegawaiModel pegawaiTermuda(InstansiModel instansi);
+	void updatePegawai(PegawaiModel pegawai , Long id);
+	List<PegawaiModel> getAllPegawai();
 }

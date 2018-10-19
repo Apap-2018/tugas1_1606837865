@@ -40,7 +40,7 @@ public class PegawaiModel implements Serializable{
 	
 	@NotNull
 	@Column(name = "tahun_masuk" , nullable = false)
-	private String tahun_masuk;
+	private String tahunMasuk;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name = "id_instansi", referencedColumnName = "id", nullable = false)
@@ -48,6 +48,8 @@ public class PegawaiModel implements Serializable{
 	@JsonIgnore
 	private InstansiModel instansi;
 	
+	@OneToMany(mappedBy = "pegawai", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
+	private List<JabatanPegawaiModel> listJabatan;
 
 	public Long getId() {
 		return id;
@@ -91,12 +93,13 @@ public class PegawaiModel implements Serializable{
 		this.tanggalLahir = tanggalLahir;
 	}
 
-	public String getTahun_masuk() {
-		return tahun_masuk;
+
+	public String getTahunMasuk() {
+		return tahunMasuk;
 	}
 
-	public void setTahun_masuk(String tahun_masuk) {
-		this.tahun_masuk = tahun_masuk;
+	public void setTahunMasuk(String tahunMasuk) {
+		this.tahunMasuk = tahunMasuk;
 	}
 
 	public InstansiModel getInstansi() {
@@ -105,6 +108,14 @@ public class PegawaiModel implements Serializable{
 
 	public void setInstansi(InstansiModel instansi) {
 		this.instansi = instansi;
+	}
+
+	public List<JabatanPegawaiModel> getListJabatan() {
+		return listJabatan;
+	}
+
+	public void setListJabatan(List<JabatanPegawaiModel> listJabatan) {
+		this.listJabatan = listJabatan;
 	}
 	
 	
